@@ -7,11 +7,12 @@ Function DisableTelemetry {
         "HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Policies\DataCollection"
     )
     foreach($path in $paths) {
-        If (Test-Path "$path") {
-            Set-ItemProperty -Path "$path" -Name "AllowTelemetry" -Type DWord -Value 0
-        }
+        Safe-Set-ItemProperty("$path","AllowTelemetry",DWord,0)
+        # If (Test-Path "$path") {
+        #     Set-ItemProperty -Path "$path" -Name "AllowTelemetry" -Type DWord -Value 0
+        # }
     }
-    success "Disabling Telemetry..."
+    success "[DONE] Disabling Telemetry..."
 }
 Function DisableWiFiSense {
 	info "Disabling Wi-Fi Sense..."
@@ -27,7 +28,7 @@ Function DisableWiFiSense {
             Set-ItemProperty -Path "$path" -Name "Value" -Type DWord -Value 0
         }
     }
-	success "Disabling Wi-Fi Sense..."
+	success "[DONE] Disabling Wi-Fi Sense..."
 
 }
 Function DisableSmartScreen {
@@ -46,7 +47,7 @@ Function DisableSmartScreen {
 	}
 	Set-ItemProperty -Path "HKCU:\SOFTWARE\Classes\Local Settings\Software\Microsoft\Windows\CurrentVersion\AppContainer\Storage\$edge\MicrosoftEdge\PhishingFilter" -Name "EnabledV9" -Type DWord -Value 0
 	Set-ItemProperty -Path "HKCU:\SOFTWARE\Classes\Local Settings\Software\Microsoft\Windows\CurrentVersion\AppContainer\Storage\$edge\MicrosoftEdge\PhishingFilter" -Name "PreventOverride" -Type DWord -Value 0
-    success "Disabling SmartScreen Filter..."
+    success "[DONE] Disabling SmartScreen Filter..."
 }
 
 Function DisableWebSearch {
@@ -59,7 +60,7 @@ Function DisableWebSearch {
 		New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search" -Force | Out-Null
 	}
 	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search" -Name "DisableWebSearch" -Type DWord -Value 1
-    success "Disabling Bing Search in Start Menu..."
+    success "[DONE] Disabling Bing Search in Start Menu..."
 }
 
 
@@ -72,7 +73,7 @@ Function DisableBackgroundApps {
             Set-ItemProperty -Path $_.PsPath -Name "DisabledByUser" -Type DWord -Value 1
         }
     }
-    success "Disabling Background application access..."
+    success "[DONE] Disabling Background application access..."
 }
 Function DisableLockScreenSpotlight {
     info "Disabling Lock screen spotlight..."
@@ -82,7 +83,7 @@ Function DisableLockScreenSpotlight {
         Set-ItemProperty -Path "$path" -Name 'RotatingLockScreenOverlayEnabled' -Type DWord -Value 0
         Set-ItemProperty -Path "$path" -Name 'SubscribedContent-338387Enabled' -Type DWord -Value 0
     }
-    success "Disabling Lock screen spotlight..."
+    success "[DONE] Disabling Lock screen spotlight..."
 }
 
 Function DisableLocationTracking {
@@ -97,7 +98,7 @@ Function DisableLocationTracking {
             Set-ItemProperty -Path "$path" -Name $_.Value -Type DWord -Value 0
         }
     }
-    success "Disabling Location Tracking..."
+    success "[DONE] Disabling Location Tracking..."
 }
 Function DisableMapUpdates {
     info "Disabling automatic Maps updates..."
@@ -105,7 +106,7 @@ Function DisableMapUpdates {
     If (Test-Path "$path") {
         Set-ItemProperty -Path "$path" -Name "AutoUpdateEnabled" -Type DWord -Value 0
     }
-    success "Disabling automatic Maps updates..."
+    success "[DONE] Disabling automatic Maps updates..."
 
 }
 Function DisableFeedback {
@@ -114,7 +115,7 @@ Function DisableFeedback {
 		New-Item -Path "HKCU:\SOFTWARE\Microsoft\Siuf\Rules" -Force | Out-Null
 	}
 	Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Siuf\Rules" -Name "NumberOfSIUFInPeriod" -Type DWord -Value 0
-	success "Disabling Feedback..."
+	success "[DONE] Disabling Feedback..."
 }
 Function DisableAdvertisingID {
     info "Disabling Advertising ID..."
@@ -131,7 +132,7 @@ Function DisableAdvertisingID {
             Set-ItemProperty -Path "$path" -Name $_.Value -Type DWord -Value 0
         }
     }
-	success "Disabling Advertising ID..."
+	success "[DONE] Disabling Advertising ID..."
 }
 Function DisableCortana {
     info "Disabling Cortana..."
@@ -153,7 +154,7 @@ Function DisableCortana {
 		New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search" -Force | Out-Null
 	}
 	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search" -Name "AllowCortana" -Type DWord -Value 0
-    success "Disabling Cortana..."
+    success "[DONE] Disabling Cortana..."
 }
 Function DisableErrorReporting {
     info "Disabling Error reporting..."
@@ -161,7 +162,7 @@ Function DisableErrorReporting {
     If (Test-Path "$path") {
         Set-ItemProperty -Path "$path" -Name "Disabled" -Type DWord -Value 1
     }
-    success "Disabling Error reporting..."
+    success "[DONE] Disabling Error reporting..."
 }
 
 Function DisableAutoLogger {
@@ -171,21 +172,21 @@ Function DisableAutoLogger {
 		Remove-Item "$autoLoggerDir\AutoLogger-Diagtrack-Listener.etl"
 	}
 	icacls $autoLoggerDir /deny SYSTEM:`(OI`)`(CI`)F | Out-Null
-	success "Removing AutoLogger file and restricting directory..."
+	success "[DONE] Removing AutoLogger file and restricting directory..."
 }
 
 Function DisableDiagTrack {
 	info "Stopping and disabling Diagnostics Tracking Service..."
 	Stop-Service "DiagTrack" -WarningAction SilentlyContinue
 	Set-Service "DiagTrack" -StartupType Disabled
-	success "Stopping and disabling Diagnostics Tracking Service..."
+	success "[DONE] Stopping and disabling Diagnostics Tracking Service..."
 }
 
 Function DisableWAPPush {
 	info "Stopping and disabling WAP Push Service..."
 	Stop-Service "dmwappushservice" -WarningAction SilentlyContinue
 	Set-Service "dmwappushservice" -StartupType Disabled
-	success "Stopping and disabling WAP Push Service..."
+	success "[DONE] Stopping and disabling WAP Push Service..."
 }
 # Disable Application suggestions and automatic installation
 Function DisableAppSuggestions {

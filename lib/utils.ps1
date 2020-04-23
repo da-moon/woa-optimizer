@@ -7,7 +7,7 @@ Function RequireAdmin {
 }
 Function WaitForKey {
 	Write-Host
-	info "Press any key to restart..." -ForegroundColor Black -BackgroundColor White
+	Write-Host "Press any key to restart..." -ForegroundColor Black -BackgroundColor White
 	[Console]::ReadKey($true) | Out-Null
 }
 Function Restart {
@@ -112,4 +112,24 @@ function getopt($argv, $shortopts, $longopts) {
     }
 
     $opts, $rem
+}
+function Safe-Set-ItemProperty {
+    param (
+        [parameter(Mandatory=$true)]
+            [ValidateNotNullOrEmpty()]$Path,
+        [parameter(Mandatory=$true)]
+            [ValidateNotNullOrEmpty()]$Name,
+        [parameter(Mandatory=$true)]
+            [ValidateNotNullOrEmpty()]$Type,
+        [parameter(Mandatory=$true)]
+            [ValidateNotNullOrEmpty()]$Value
+    )
+    try {
+        debug "setting path $Path with name $Name , type $Type and value $Value"
+        Set-ItemProperty -Path "$path" -Name "$Name" -Type $Type -Value $Value -ErrorAction Stop | Out-Null
+    }
+    catch {
+        warn "could not set path $Path with name $Name , type $Type and value $Value"
+    }
+ 
 }

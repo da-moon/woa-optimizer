@@ -9,7 +9,12 @@ function warn($msg) {
       write-host "[WARN]  $msg" -f darkyellow 
 }
 function info($msg) {  
-    write-host "[INFO]  $msg" -f darkgray 
+    write-host "[INFO]  $msg" -f darkcyan 
+}
+function debug($msg) {  
+    if ($verbose){
+        write-host "[DEBUG]  $msg" -f darkgray 
+    }
 }
 function success($msg) { 
     write-host $msg -f darkgreen 

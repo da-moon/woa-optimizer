@@ -6,7 +6,7 @@ Function SetUACLow {
         Set-ItemProperty -Path "$path" -Name "ConsentPromptBehaviorAdmin" -Type DWord -Value 0
         Set-ItemProperty -Path "$path" -Name "PromptOnSecureDesktop" -Type DWord -Value 0
     }
-    success "Lowering UAC level..."
+    success "[DONE] Lowering UAC level..."
 }
 Function DisableAdminShares {
 	info "Disabling implicit administrative shares..."
@@ -14,13 +14,13 @@ Function DisableAdminShares {
     If (Test-Path "$path") {
         Set-ItemProperty -Path "$path" -Name "AutoShareWks" -Type DWord -Value 0
     }
-	success "Disabling implicit administrative shares..."
+	success "[DONE] Disabling implicit administrative shares..."
 
 }
 Function EnableCtrldFolderAccess {
 	info "Enabling Controlled Folder Access..."
 	Set-MpPreference -EnableControlledFolderAccess Enabled
-	success "Enabling Controlled Folder Access..."
+	success "[DONE] Enabling Controlled Folder Access..."
 }
 Function DisableFirewall {
 	info "Disabling Firewall..."
@@ -28,12 +28,12 @@ Function DisableFirewall {
 		New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\StandardProfile" -Force | Out-Null
 	}
 	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\StandardProfile" -Name "EnableFirewall" -Type DWord -Value 0
-	success "Disabling Firewall..."
+	success "[DONE] Disabling Firewall..."
 }
 Function EnableFirewall {
 	info "Enabling Firewall..."
 	Remove-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\StandardProfile" -Name "EnableFirewall" -ErrorAction SilentlyContinue
-	success "Enabling Firewall..."
+	success "[DONE] Enabling Firewall..."
 }
 Function DisableDefender {
 	info "Disabling Windows Defender..."
@@ -42,7 +42,7 @@ Function DisableDefender {
 	}
 	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender" -Name "DisableAntiSpyware" -Type DWord -Value 1
 	Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" -Name "SecurityHealth" -ErrorAction SilentlyContinue
-	success "Disabling Windows Defender..."
+	success "[DONE] Disabling Windows Defender..."
 }
 Function DisableDefenderCloud {
     info "Disabling Windows Defender Cloud..."
@@ -51,7 +51,7 @@ Function DisableDefenderCloud {
     }
     Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet" -Name "SpynetReporting" -Type DWord -Value 0
     Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet" -Name "SubmitSamplesConsent" -Type DWord -Value 2
-    success "Disabling Windows Defender Cloud..."
+    success "[DONE] Disabling Windows Defender Cloud..."
 }
 Function DisableUpdateMSRT {
 	info "Disabling Malicious Software Removal Tool offering..."
@@ -59,7 +59,7 @@ Function DisableUpdateMSRT {
 		New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\MRT" | Out-Null
 	}
 	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\MRT" -Name "DontOfferThroughWUAU" -Type DWord -Value 1
-	success "Disabling Malicious Software Removal Tool offering..."
+	success "[DONE] Disabling Malicious Software Removal Tool offering..."
 }
 Function DisableUpdateDriver {
     info "Disabling driver offering through Windows Update..."
@@ -71,7 +71,7 @@ Function DisableUpdateDriver {
 		New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" | Out-Null
 	}
 	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" -Name "ExcludeWUDriversInQualityUpdate" -Type DWord -Value 1
-	success "Disabling driver offering through Windows Update..."
+	success "[DONE] Disabling driver offering through Windows Update..."
 }
 Function DisableUpdateRestart {
 	info "Disabling Windows Update automatic restart..."
@@ -80,7 +80,7 @@ Function DisableUpdateRestart {
 	}
 	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" -Name "NoAutoRebootWithLoggedOnUsers" -Type DWord -Value 1
 	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" -Name "AUPowerManagement" -Type DWord -Value 0
-	success "Disabling Windows Update automatic restart..."
+	success "[DONE] Disabling Windows Update automatic restart..."
 }
 Function DisableSharedExperiences {
     info "Disabling Shared Experiences..."
@@ -88,7 +88,7 @@ Function DisableSharedExperiences {
     If (Test-Path "$path") {
         Set-ItemProperty -Path "$path" -Name "RomeSdkChannelUserAuthzPolicy" -Type DWord -Value 0
     }
-    success "Disabling Shared Experiences..."
+    success "[DONE] Disabling Shared Experiences..."
 }
 Function DisableRemoteAssistance {
     info "Disabling Remote Assistance..."
@@ -96,7 +96,7 @@ Function DisableRemoteAssistance {
     If (Test-Path "$path") {
         Set-ItemProperty -Path "$path" -Name "fAllowToGetHelp" -Type DWord -Value 0
     }
-    success "Disabling Remote Assistance..."
+    success "[DONE] Disabling Remote Assistance..."
 }
 Function DisableAutoplay {
     info "Disabling Autoplay..."
@@ -104,7 +104,7 @@ Function DisableAutoplay {
     If (Test-Path "$path") {
         Set-ItemProperty -Path "$path" -Name "DisableAutoplay" -Type DWord -Value 1
     }
-    success "Disabling Autoplay..."
+    success "[DONE] Disabling Autoplay..."
 }
 Function EnableRemoteDesktop {
     info "Enabling Remote Desktop w/o Network Level Authentication..."
@@ -118,7 +118,7 @@ Function EnableRemoteDesktop {
             Set-ItemProperty -Path "$path" -Name $_.Value -Type DWord -Value 0
         }
     }
-    success "Enabling Remote Desktop w/o Network Level Authentication..."
+    success "[DONE] Enabling Remote Desktop w/o Network Level Authentication..."
 }
 Function DisableRemoteDesktop {
     info "Disabling Remote Desktop..."
@@ -132,7 +132,7 @@ Function DisableRemoteDesktop {
             Set-ItemProperty -Path "$path" -Name $_.Value -Type DWord -Value 1
         }
     }
-    success "Disabling Remote Desktop..."
+    success "[DONE] Disabling Remote Desktop..."
 }
 Function EnableStorageSense {
     info "Enabling Storage Sense..."
@@ -140,7 +140,7 @@ Function EnableStorageSense {
     If (Test-Path "$path") {
         Set-ItemProperty -Path "$path" -Name "01" -Type DWord -Value 1 -ErrorAction SilentlyContinue
     }
-    success "Enabling Storage Sense..."
+    success "[DONE] Enabling Storage Sense..."
 }
 Function DisableStorageSense {
 	info "Disabling Storage Sense..."
@@ -148,24 +148,24 @@ Function DisableStorageSense {
     If (Test-Path "$path") {
         Set-ItemProperty -Path "$path" -Name "01" -Type DWord -Value 0 -ErrorAction SilentlyContinue
     }
-	success "Disabling Storage Sense..."
+	success "[DONE] Disabling Storage Sense..."
 }
 Function DisableDefragmentation {
 	info "Disabling scheduled defragmentation..."
 	Disable-ScheduledTask -TaskName "\Microsoft\Windows\Defrag\ScheduledDefrag" | Out-Null
-	success "Disabling scheduled defragmentation..."
+	success "[DONE] Disabling scheduled defragmentation..."
 }
 Function DisableSuperfetch {
 	info "Stopping and disabling Superfetch service..."
 	Stop-Service "SysMain" -WarningAction SilentlyContinue
 	Set-Service "SysMain" -StartupType Disabled
-	success "Stopping and disabling Superfetch service..."
+	success "[DONE] Stopping and disabling Superfetch service..."
 }
 Function DisableIndexing {
 	info "Stopping and disabling Windows Search indexing service..."
 	Stop-Service "WSearch" -WarningAction SilentlyContinue
 	Set-Service "WSearch" -StartupType Disabled
-	success "Stopping and disabling Windows Search indexing service..."
+	success "[DONE] Stopping and disabling Windows Search indexing service..."
 }
 Function SetBIOSTimeLocal {
 	info "Setting BIOS time to Local time..."
@@ -173,7 +173,7 @@ Function SetBIOSTimeLocal {
     If (Test-Path "$path") {
         Remove-ItemProperty -Path "$path" -Name "RealTimeIsUniversal" -ErrorAction SilentlyContinue
     }
-	success "Setting BIOS time to Local time..."
+	success "[DONE] Setting BIOS time to Local time..."
 
 }
 Function SetBIOSTimeUTC {
@@ -182,7 +182,7 @@ Function SetBIOSTimeUTC {
     If (Test-Path "$path") {
         Set-ItemProperty -Path "$path" -Name "RealTimeIsUniversal" -Type DWord -Value 1
     }
-    success "Setting BIOS time to UTC..."
+    success "[DONE] Setting BIOS time to UTC..."
 }
 
 Function DisableHibernation {
@@ -196,7 +196,7 @@ Function DisableHibernation {
 	}
 	Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FlyoutMenuSettings" -Name "ShowHibernateOption" -Type Dword -Value 0
     Start-Process 'powercfg.exe' -Verb runAs -ArgumentList '/h off'
-    success "Disabling Hibernation..."
+    success "[DONE] Disabling Hibernation..."
 }
 
 Function DisableFastStartup {
@@ -205,7 +205,7 @@ Function DisableFastStartup {
     If (Test-Path "$path") {
         Set-ItemProperty -Path "$path"  -Name "HiberbootEnabled" -Type DWord -Value 0
     }
-    success "Disabling Fast Startup..."
+    success "[DONE] Disabling Fast Startup..."
 }
 
 Function DisableExtraServices {
@@ -220,7 +220,7 @@ Function DisableExtraServices {
             warn "Skipping $service (does not exist)"
         }
     }
-	success "Disabling extra services ..."
+	success "[DONE] Disabling extra services ..."
 }
 
 
@@ -230,5 +230,5 @@ Function DisableAutorun {
 		New-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" | Out-Null
 	}
 	Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" -Name "NoDriveTypeAutoRun" -Type DWord -Value 255
-	success "Disabling Autorun for all drives..."
+	success "[DONE] Disabling Autorun for all drives..."
 }

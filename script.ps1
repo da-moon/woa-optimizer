@@ -44,7 +44,7 @@ $optional_features_to_remove = @(
     'Internet-Explorer-Optional-amd64'
 )
 $tweaks = @(
-	# ---------------------------------------- telemetry ----------------------------------------
+	# ---------------------------------------- privacy -----------------------------------------
 	"DisableTelemetry",
     # ------------------------------------------------------------------------------------------
     "DisableWiFiSense",             
@@ -420,7 +420,7 @@ $libs= @(
 foreach($lib in $libs) {
     info "$script_name Loading $lib"
     Invoke-Expression (new-object net.webclient).downloadstring("$base_url/$lib")
-    success "$script_name Loading $lib"
+    success "[DONE] $script_name Loading $lib"
 }
 $old_erroractionpreference = $erroractionpreference
 $erroractionpreference = 'stop' # quit if anything goes wrong
@@ -440,7 +440,14 @@ if ((Get-ExecutionPolicy).ToString() -notin $allowedExecutionPolicy) {
     break
 }
 RequireAdmin
-$dir = pwd
+# parsing flags
+$opt, $apps, $err = getopt $args 'dv' 'dependancies,verbose'
+if ($err) {
+    error "$err"
+    exit 1
+}
+$dependancies = $opt.d -or $opt.dependancies
+$verbose = $opt.v -or $opt.verbose
 if ((Get-Command "scoop" -ErrorAction SilentlyContinue) -eq $null) 
 { 
 	warn "Unable to find scoop in your PATH"
@@ -454,13 +461,6 @@ if ((Get-Command "choco" -ErrorAction SilentlyContinue) -eq $null)
 	InstallScoop
 	InstallChocolatey
 }
-$opt, $apps, $err = getopt $args 'd' 'dependancies'
-
-if ($err) {
-    error "$err"
-    exit 1
-}
-$dependancies = $opt.d -or $opt.dependancies
 if ($dependancies) {
     info "installing dependancies"
     InstallScoopPackages
@@ -482,7 +482,7 @@ If ($args) {
 foreach($tweak in $tweaks) {
 	Invoke-Expression $tweak
 }
-success "$script_name ran wirhout any issues successfully!"
+success "[DONE] $script_name ran wirhout any issues successfully!"
 $erroractionpreference = $old_erroractionpreference # Reset $erroractionpreference to original value
 WaitForKey
 Restart
