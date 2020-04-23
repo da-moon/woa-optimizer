@@ -1,5 +1,4 @@
 #Requires -Version 5
-
 # Tweaks
 $package_managers = @(
     "InstallScoop",
@@ -352,7 +351,6 @@ $thirdparty_apps_to_remove= @(
     "89006A2E.AutodeskSketchBook",
     "CAF9E577.Plex"
 )
-
 $services_to_disable = @(
     # Microsoft (R) Diagnostics Hub Standard Collector Service
     "diagnosticshub.standardcollector.service",
@@ -409,7 +407,6 @@ $script_name='woa-optimizer'
 $base_url = 'https://raw.githubusercontent.com/da-moon/woa-optimizer/master'
 Write-Output "$script_name Loading lib/log.ps1"
 Invoke-Expression (new-object net.webclient).downloadstring("$base_url/lib/log.ps1")
-
 $libs= @(
     'lib/utils.ps1',
     'lib/privacy.ps1',
@@ -424,13 +421,11 @@ foreach($lib in $libs) {
 }
 $old_erroractionpreference = $erroractionpreference
 $erroractionpreference = 'stop' # quit if anything goes wrong
-
 if (($PSVersionTable.PSVersion.Major) -lt 5) {
     Write-Output "PowerShell 5 or later is required to run woa-optimizer script."
     Write-Output "Upgrade PowerShell: https://docs.microsoft.com/en-us/powershell/scripting/setup/installing-windows-powershell"
     break
 }
-
 # show notification to change execution policy:
 $allowedExecutionPolicy = @('Unrestricted', 'RemoteSigned', 'ByPass')
 if ((Get-ExecutionPolicy).ToString() -notin $allowedExecutionPolicy) {
@@ -478,7 +473,6 @@ If ($args) {
 		$tweaks = Get-Content $preset -ErrorAction Stop | ForEach { $_.Trim() } | Where { $_ -ne "" -and $_[0] -ne "#" }
 	}
 }
- 
 foreach($tweak in $tweaks) {
 	Invoke-Expression $tweak
 }

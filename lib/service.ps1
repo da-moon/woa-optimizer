@@ -1,4 +1,3 @@
-
 Function SetUACLow {
     info "Lowering UAC level..."
     $path="HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
@@ -15,7 +14,6 @@ Function DisableAdminShares {
         Set-ItemProperty -Path "$path" -Name "AutoShareWks" -Type DWord -Value 0
     }
 	success "[DONE] Disabling implicit administrative shares..."
-
 }
 Function EnableCtrldFolderAccess {
 	info "Enabling Controlled Folder Access..."
@@ -174,7 +172,6 @@ Function SetBIOSTimeLocal {
         Remove-ItemProperty -Path "$path" -Name "RealTimeIsUniversal" -ErrorAction SilentlyContinue
     }
 	success "[DONE] Setting BIOS time to Local time..."
-
 }
 Function SetBIOSTimeUTC {
     info "Setting BIOS time to UTC..."
@@ -184,7 +181,6 @@ Function SetBIOSTimeUTC {
     }
     success "[DONE] Setting BIOS time to UTC..."
 }
-
 Function DisableHibernation {
     info "Disabling Hibernation..."
     $path="HKLM:\System\CurrentControlSet\Control\Session Manager\Power"
@@ -198,7 +194,6 @@ Function DisableHibernation {
     Start-Process 'powercfg.exe' -Verb runAs -ArgumentList '/h off'
     success "[DONE] Disabling Hibernation..."
 }
-
 Function DisableFastStartup {
     info "Disabling Fast Startup..."
     $path="HKLM:\System\CurrentControlSet\Control\Session Manager\Power"
@@ -207,7 +202,6 @@ Function DisableFastStartup {
     }
     success "[DONE] Disabling Fast Startup..."
 }
-
 Function DisableExtraServices {
 	info "Disabling extra services ..."
     foreach ($service in $services_to_disable) {
@@ -222,8 +216,6 @@ Function DisableExtraServices {
     }
 	success "[DONE] Disabling extra services ..."
 }
-
-
 Function DisableAutorun {
 	info "Disabling Autorun for all drives..."
 	If (!(Test-Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer")) {

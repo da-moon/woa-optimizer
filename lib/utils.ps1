@@ -14,7 +14,6 @@ Function Restart {
 	info "Restarting..."
 	Restart-Computer
 }
-
 function pwd($path) {
     "$($myinvocation.psscriptroot)\$path" 
 } 
@@ -34,14 +33,12 @@ function dl($url,$to) {
     $wc = New-Object Net.Webclient
     $wc.downloadFile($url,$to)
 }
-
 # download optimizer script repo
 function get_optimizer_script($dir) {
     $zipurl = 'https://github.com/da-moon/woa-optimizer/archive/master.zip'
     $zipfile = "$dir\woa-optimizer.zip"
     Write-Output 'Downloading scoop...'
     dl $zipurl $zipfile
-    
     Write-Output 'Extracting...'
     Add-Type -Assembly "System.IO.Compression.FileSystem"
     [IO.Compression.ZipFile]::ExtractToDirectory($zipfile, "$dir\_tmp")
@@ -50,19 +47,15 @@ function get_optimizer_script($dir) {
 } 
 function getopt($argv, $shortopts, $longopts) {
     $opts = @{}; $rem = @()
-
     function err($msg) {
         $opts, $rem, $msg
     }
-
     function regex_escape($str) {
         return [regex]::escape($str)
     }
-
     # ensure these are arrays
     $argv = @($argv)
     $longopts = @($longopts)
-
     for($i = 0; $i -lt $argv.length; $i++) {
         $arg = $argv[$i]
         if($null -eq $arg) { continue }
@@ -70,12 +63,9 @@ function getopt($argv, $shortopts, $longopts) {
         if($arg -is [array]) { $rem += ,$arg; continue }
         if($arg -is [int]) { $rem += $arg; continue }
         if($arg -is [decimal]) { $rem += $arg; continue }
-
         if($arg.startswith('--')) {
             $name = $arg.substring(2)
-
             $longopt = $longopts | Where-Object { $_ -match "^$name=?$" }
-
             if($longopt) {
                 if($longopt.endswith('=')) { # requires arg
                     if($i -eq $argv.length - 1) {
@@ -91,7 +81,6 @@ function getopt($argv, $shortopts, $longopts) {
         } elseif($arg.startswith('-') -and $arg -ne '-') {
             for($j = 1; $j -lt $arg.length; $j++) {
                 $letter = $arg[$j].tostring()
-
                 if($shortopts -match "$(regex_escape $letter)`:?") {
                     $shortopt = $matches[0]
                     if($shortopt[1] -eq ':') {
@@ -110,7 +99,6 @@ function getopt($argv, $shortopts, $longopts) {
             $rem += $arg
         }
     }
-
     $opts, $rem
 }
 function Safe-Set-ItemProperty($Path,$Name,$Type,$Value) {

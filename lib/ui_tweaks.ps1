@@ -41,7 +41,6 @@ Function HideShutdownFromLockScreen {
         Set-ItemProperty -Path "$path" -Name "ShutdownWithoutLogon" -Type DWord -Value 0
     }
     success "[DONE] Hiding shutdown options from Lock Screen..."
-
 }
 Function ShowShutdownOnLockScreen {
     info "Showing shutdown options on Lock Screen..."
@@ -295,7 +294,6 @@ Function DisableThumbsDB {
         Set-ItemProperty -Path "$path" -Name "DisableThumbsDBOnNetworkFolders" -Type DWord -Value 1
     }
     success "[DONE] Disabling creation of Thumbs.db..."
-
 }
 Function EnableNumlock {
 	info "Enabling NumLock after startup..."
@@ -306,7 +304,6 @@ Function EnableNumlock {
     If (Test-Path "$path") {
         Set-ItemProperty -Path "$path" -Name "InitialKeyboardIndicators" -Type DWord -Value 2147483650
     }
-
 	Add-Type -AssemblyName System.Windows.Forms
 	If (!([System.Windows.Forms.Control]::IsKeyLocked('NumLock'))) {
 		$wsh = New-Object -ComObject WScript.Shell

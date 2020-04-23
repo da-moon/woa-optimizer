@@ -1,4 +1,3 @@
-
 Function DisableOneDrive {
 	info "Disabling OneDrive..."
 	If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\OneDrive")) {
@@ -14,7 +13,6 @@ Function UninstallOneDrive {
 	If (!(Test-Path $onedrive)) {
 		$onedrive = "$env:SYSTEMROOT\System32\OneDriveSetup.exe"
     }
-
 	Start-Process $onedrive "/uninstall" -NoNewWindow -Wait
 	Start-Sleep -s 3
 	Stop-Process -Name explorer -ErrorAction SilentlyContinue
@@ -29,7 +27,6 @@ Function UninstallOneDrive {
 	Remove-Item -Path "HKCR:\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" -Recurse -ErrorAction SilentlyContinue
 	Remove-Item -Path "HKCR:\Wow6432Node\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" -Recurse -ErrorAction SilentlyContinue
 }
-
 Function UninstallBloat {
     info "Uninstalling default Microsoft applications..."
     foreach($app in $microsoft_apps_to_remove) {
@@ -47,7 +44,6 @@ Function UninstallBloat {
 		New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\GameDVR" | Out-Null
 	}
 	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\GameDVR" -Name "AllowGameDVR" -Type DWord -Value 0
-
 }
 Function UninstallWindowsStore {
 	info "Uninstalling Windows Store..."
@@ -59,7 +55,6 @@ Function InstallWindowsStore {
 	Get-AppxPackage -AllUsers "Microsoft.DesktopAppInstaller" | ForEach {Add-AppxPackage -DisableDevelopmentMode -Register "$($_.InstallLocation)\AppXManifest.xml"}
 	Get-AppxPackage -AllUsers "Microsoft.WindowsStore" | ForEach {Add-AppxPackage -DisableDevelopmentMode -Register "$($_.InstallLocation)\AppXManifest.xml"}
 }
-
 Function DisableAdobeFlash {
 	info "Disabling built-in Adobe Flash in IE and Edge..."
 	If (!(Test-Path "HKCU:\Software\Classes\Local Settings\Software\Microsoft\Windows\CurrentVersion\AppContainer\Storage\microsoft.microsoftedge_8wekyb3d8bbwe\MicrosoftEdge\Addons")) {
@@ -129,7 +124,6 @@ Function EnableNewAppPrompt {
 	info "Enabling 'How do you want to open this file?' prompt..."
 	Remove-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer" -Name "NoNewAppAlert" -ErrorAction SilentlyContinue
 }
-
 Function DeleteTempFiles {
     info "Cleaning up temporary files..."
     $tempfolders = @("C:\Windows\Temp\*", "C:\Windows\Prefetch\*", "C:\Documents and Settings\*\Local Settings\temp\*", "C:\Users\*\Appdata\Local\Temp\*")
@@ -147,7 +141,6 @@ Function DownloadShutup10 {
     $file="Shutup10.exe"
     aria2_dl "$url" "$dir" "$file"
 }
-
 Function InstallScoop {
     info "Installing Up Scoop ..."
     iwr -useb get.scoop.sh | iex
@@ -165,7 +158,6 @@ Function InstallChocolatey {
     info "Installing Up Chocolatey ..."
     iwr -useb https://chocolatey.org/install.ps1 | iex
 }
-
 Function DisableWindowsSearch {
 	info "Stopping and disabling Windows Search Service..."
 	Stop-Service "WSearch" -WarningAction SilentlyContinue
@@ -184,7 +176,6 @@ Function DisableCompatibilityAppraiser {
         Get-ScheduledTask -TaskName $_ -TaskPath '\Microsoft\Windows\Application Experience\' |
         Disable-ScheduledTask | Out-Null
     }
-
     del C:\ProgramData\Microsoft\Diagnosis\ETLLogs\AutoLogger\AutoLogger-Diagtrack-Listener.etl -ErrorAction SilentlyContinue
     # Disable the Autologger session at the next computer restart
     Set-AutologgerConfig -Name 'AutoLogger-Diagtrack-Listener' -Start 0
@@ -193,8 +184,6 @@ Function DisableConnectedStandby {
     info "Disabling Connected Standby..."
     Set-ItemProperty -Path "HKLM:\SYSTEM\\CurrentControlSet\Control\Power" -Name "CSEnabled" -Type DWord -Value 0
 }
-
-
 Function EnableBigDesktopIcons {
     Set-ItemProperty -path HKCU:\Software\Microsoft\Windows\Shell\Bags\1\Desktop -name IconSize -value 100
 }
