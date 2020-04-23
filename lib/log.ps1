@@ -12,7 +12,7 @@ function info($msg) {
     write-host "[INFO]  $msg" -f darkcyan 
 }
 function debug($msg) {  
-    if ($verbose){
+    if ($debug){
         write-host "[DEBUG]  $msg" -f darkgray 
     }
 }
