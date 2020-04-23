@@ -129,9 +129,9 @@ Function DisableErrorReporting {
 Function DisableAutoLogger {
 	info "Removing AutoLogger file and restricting directory..."
 	$autoLoggerDir = "$env:PROGRAMDATA\Microsoft\Diagnosis\ETLLogs\AutoLogger"
-	If (Test-Path "$autoLoggerDir\AutoLogger-Diagtrack-Listener.etl") {
+	# If (Test-Path "$autoLoggerDir\AutoLogger-Diagtrack-Listener.etl") {
         Remove-Item  -Path "$autoLoggerDir\AutoLogger-Diagtrack-Listener.etl" -ErrorAction SilentlyContinue
-	}
+	# }
 	icacls $autoLoggerDir /deny SYSTEM:`(OI`)`(CI`)F | Out-Null
 	success "Removing AutoLogger file and restricting directory..."
 }

@@ -7,9 +7,7 @@ Function DisableLockScreen {
 Function EnableLockScreen {
     info "Enabling Lock screen..."
     $path="HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization"
-    If (Test-Path "$path") {
-        Remove-ItemProperty  -Path "$path" -Name "NoLockScreen" -ErrorAction SilentlyContinue
-    }
+    Safe-Remove-ItemProperty "$path" "NoLockScreen"
     success "Enabling Lock screen..."
 }
 Function DisableLockScreenRS1 {
@@ -65,9 +63,7 @@ Function HideTaskbarSearchBox {
 Function ShowTaskbarSearchBox {
     info "Showing Taskbar Search box / button..."
     $path="HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search"
-    If (Test-Path "$path") {
-        Remove-ItemProperty  -Path "$path" -Name "SearchboxTaskbarMode" -ErrorAction SilentlyContinue
-    }
+    Safe-Remove-ItemProperty "$path" "SearchboxTaskbarMode"
     success "Showing Taskbar Search box / button..."
 }
 Function HideTaskView {
@@ -79,9 +75,7 @@ Function HideTaskView {
 Function ShowTaskView {
     info "Showing Task View button..."
     $path="HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
-    If (Test-Path "$path") {
-        Remove-ItemProperty  -Path "$path" -Name "ShowTaskViewButton" -ErrorAction SilentlyContinue
-    }
+    Safe-Remove-ItemProperty "$path" "ShowTaskViewButton"
     success "Showing Task View button..."
 }
 Function ShowSmallTaskbarIcons {
@@ -93,9 +87,7 @@ Function ShowSmallTaskbarIcons {
 Function ShowLargeTaskbarIcons {
     info "Showing large icons in taskbar..."
     $path="HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
-    If (Test-Path "$path") {
-        Remove-ItemProperty  -Path "$path"  -Name "TaskbarSmallIcons" -ErrorAction SilentlyContinue
-    }
+    Safe-Remove-ItemProperty "$path" "TaskbarSmallIcons"
     success "Showing large icons in taskbar..."
 }
 Function ShowTaskbarTitles {
@@ -107,9 +99,7 @@ Function ShowTaskbarTitles {
 Function HideTaskbarTitles {
     info "Hiding titles in taskbar..."
     $path="HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
-    If (Test-Path "$path") {
-        Remove-ItemProperty  -Path "$path" -Name "TaskbarGlomLevel" -ErrorAction SilentlyContinue
-    }
+    Safe-Remove-ItemProperty "$path" "TaskbarGlomLevel"
     success "Hiding titles in taskbar..."
 }
 Function ShowTaskManagerDetails {
@@ -146,17 +136,15 @@ Function ShowFileOperationsDetails {
 Function HideFileOperationsDetails {
     info "Hiding file operations details..."
     $path="HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\OperationStatusManager"
-    If (Test-Path "$path") {
-        Remove-ItemProperty  -Path "$path" -Name "EnthusiastMode" -ErrorAction SilentlyContinue
-    }
+    Safe-Remove-ItemProperty "$path" "EnthusiastMode"
     success "Hiding file operations details..."
 }
 Function Hide3DObjectsFromThisPC {
     info "Hiding 3D Objects icon from This PC..."
     $path="HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}"
-    If (Test-Path "$path") {
+    # If (Test-Path "$path") {
         Remove-Item  -Path "$path" -Recurse -ErrorAction SilentlyContinue
-    }
+    # }
     success "Hiding 3D Objects icon from This PC..."
 }
 Function HideTaskbarPeopleIcon {
@@ -280,9 +268,7 @@ Function EnableFileDeleteConfirm {
 Function DisableFileDeleteConfirm {
     info "Disabling file delete confirmation dialog..."
     $path="HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer"
-    If (Test-Path "$path") {
-        Remove-ItemProperty  -Path "$path" -Name "ConfirmFileDelete" -ErrorAction SilentlyContinue
-    }
+    Safe-Remove-ItemProperty "$path" "ConfirmFileDelete"
     success "Disabling file delete confirmation dialog..."
 }
 Function HideTaskbarSearchBox {
@@ -294,9 +280,7 @@ Function HideTaskbarSearchBox {
 Function ShowTaskbarSearchBox {
     info "Showing Taskbar Search box / button..."
     $path="HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search"
-    If (Test-Path "$path") {
-        Remove-ItemProperty  -Path "$path" -Name "SearchboxTaskbarMode" -ErrorAction SilentlyContinue
-    }
+    Safe-Remove-ItemProperty "$path" "SearchboxTaskbarMode"
     success "Showing Taskbar Search box / button..."
 }
 Function EnableFileDeleteConfirm {

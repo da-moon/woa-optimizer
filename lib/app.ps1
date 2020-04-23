@@ -29,7 +29,6 @@ Function UninstallOneDrive {
 }
 Function UninstallBloat {
     info "Removing Windows Bloatware ..."
-
     info "Uninstalling default Microsoft applications..."
     foreach($app in $microsoft_apps_to_remove) {
         info "uninstalling Microsoft.$app"
@@ -42,14 +41,12 @@ Function UninstallBloat {
         Get-AppxPackage -all "$app" | Remove-AppxPackage -AllUsers
     }
     success "Uninstalling default third party applications..."
-  
     info "Disabling Xbox ..."
     # xbox ....
     Safe-Set-ItemProperty "HKCU:\System\GameConfigStore" "GameDVR_Enabled" DWord 0
     Create-Path-If-Not-Exists "HKLM:\SOFTWARE\Policies\Microsoft\Windows\GameDVR"
     Safe-Set-ItemProperty "HKLM:\SOFTWARE\Policies\Microsoft\Windows\GameDVR" "AllowGameDVR" DWord 0
     success "Disabling Xbox ..."
-  
     success "Removing Windows Bloatware ..."
 }
 Function UninstallWindowsStore {
@@ -121,7 +118,7 @@ Function DisableSearchAppInStore {
 }
 Function EnableSearchAppInStore {
 	info "Enabling search for app in store for unknown extensions..."
-	Remove-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer" -Name "NoUseStoreOpenWith" -ErrorAction SilentlyContinue
+	Safe-Remove-ItemProperty "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer" "NoUseStoreOpenWith"
 	success "Enabling search for app in store for unknown extensions..."
 }
 Function DisableNewAppPrompt {

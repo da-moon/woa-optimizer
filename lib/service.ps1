@@ -136,9 +136,7 @@ Function DisableIndexing {
 Function SetBIOSTimeLocal {
 	info "Setting BIOS time to Local time..."
     $path="HKLM:\SYSTEM\CurrentControlSet\Control\TimeZoneInformation"
-    If (Test-Path "$path") {
-        Remove-ItemProperty -Path "$path" -Name "RealTimeIsUniversal" -ErrorAction SilentlyContinue
-    }
+    Safe-Remove-ItemProperty "$path" "RealTimeIsUniversal"
 	success "Setting BIOS time to Local time..."
 }
 Function SetBIOSTimeUTC {

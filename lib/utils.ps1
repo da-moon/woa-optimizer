@@ -110,6 +110,15 @@ function Safe-Set-ItemProperty($Path,$Name,$Type,$Value) {
         warn "could not set path $Path with name $Name , type $Type and value $Value"
     }
 }
+function Safe-Remove-ItemProperty($Path,$Name,$Type,$Value) {
+    try {
+        debug "removing item property $Name of $Path"
+        Remove-ItemProperty -Path "$path" -Name "$Name" -ErrorAction Stop | Out-Null
+    }
+    catch {
+        warn "could not removing item property $Name of $Path"
+    }
+}
 function Create-Path-If-Not-Exists($Path) {
     try {
         debug "Cheking if path $Path exists"
