@@ -126,6 +126,7 @@ function Safe-Uninstall($app) {
         info "uninstalling $app"
         Remove-AppxPackage -AllUsers -PackageName $package -ErrorAction Stop | Out-Null
         success "uninstalling $app"
+    }
     catch {
         warn "uninstalling $app failed. possible cause is that $app was not installed at the time of executing $script_name script."
     }
