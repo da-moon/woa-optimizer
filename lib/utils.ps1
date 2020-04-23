@@ -121,7 +121,7 @@ function Safe-Remove-ItemProperty($Path,$Name,$Type,$Value) {
 }
 function Safe-Uninstall($app) {
     try {
-        info "uninstalling $package"
+        info "uninstalling $app"
         Get-AppxPackage -all "$app" | Remove-AppxPackage -AllUsers
         success "uninstalling $app"
     }
@@ -131,7 +131,7 @@ function Safe-Uninstall($app) {
 }
 function Create-Path-If-Not-Exists($Path) {
     try {
-        debug "Checking if path $Path exists"
+        debug "checking if path $Path exists"
         If (!(Test-Path "$Path")) {
             debug "$Path does not exists. creating ..."
             New-Item -Path "$Path" -Force -ErrorAction Stop | Out-Null
