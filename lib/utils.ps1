@@ -119,7 +119,7 @@ function Safe-Remove-ItemProperty($Path,$Name,$Type,$Value) {
         warn "could not removing item property $Name of $Path"
     }
 }
-function Safe-Uninstall($Name) {
+function Safe-Uninstall($app) {
     try {
         info "Getting $app information"
         $package = Get-AppxPackage -all "$app" -ErrorAction Stop | Out-Null
