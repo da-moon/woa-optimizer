@@ -227,9 +227,14 @@ Function EnableBigDesktopIcons {
 Function RemoveUnneededComponents {
     info "Disabling Optional Feature..."
     foreach ($feature in $optional_features_to_remove) {
-        info "Disabling: $feature"
-        disable-windowsoptionalfeature -online -featureName $feature -NoRestart 
-        success "Disabling: $feature"
+        try {
+            info "Disabling: $feature"
+            disable-windowsoptionalfeature -online -featureName $feature -NoRestart 
+            success "Disabling: $feature"
+        }
+        catch{
+            warn "could not disable $feature possibly due to fact that it does't exist."
+        }
     }
     success "Disabling Optional Feature..."
 }
