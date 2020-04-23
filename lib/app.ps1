@@ -93,8 +93,20 @@ Function InstallLinuxSubsystem {
     $dir=pwd
     $file="ubuntu.appx"
     aria2_dl "$url" "$dir" "$file"
-    Add-AppxPackage "$dir\$file"
-    success "Installing Linux Subsystem..."
+    try {
+        info "installing $file"
+        Add-AppxPackage "$dir\$file"
+        success "installing $file"
+        info "cleaning up e $dir\$file"
+        Remove-Item -Path "$dir\$file" -Recurse -Force -ErrorAction SilentlyContinue
+        success "Installing Linux Subsystem..."
+    }
+    catch{
+        warn "could not install $file"
+        info "cleaning up e $dir\$file"
+        Remove-Item -Path "$dir\$file" -Recurse -Force -ErrorAction SilentlyContinue
+    }
+
 }
 Function AddPhotoViewerOpenWith {
 	info "Adding Photo Viewer to `"Open with...`""

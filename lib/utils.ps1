@@ -30,6 +30,7 @@ function aria2_dl($url,$dir,$file) {
     try {
         info "Downloading $file from $url and storing it in $dir"
         aria2c -k 1M -c -j16 -x16 --dir="$dir" --out="$file" "$url"
+        success "Downloading $file from $url and storing it in $dir"
     }
     catch
     {
