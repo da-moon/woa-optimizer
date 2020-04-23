@@ -436,7 +436,7 @@ if ((Get-ExecutionPolicy).ToString() -notin $allowedExecutionPolicy) {
 }
 RequireAdmin
 # parsing flags
-$opt, $apps, $err = getopt $args 'dv' 'dependancies','verbose'
+$opt, $apps, $err = getopt $args 'dv' 'dependancies', 'verbose'
 if ($err) {
     error "$err"
     exit 1
