@@ -31,14 +31,13 @@ Function UninstallBloat {
     info "Removing Windows Bloatware ..."
     info "Uninstalling default Microsoft applications..."
     foreach($app in $microsoft_apps_to_remove) {
-        info "uninstalling Microsoft.$app"
-        Get-AppxPackage -all "Microsoft.$app" | Remove-AppxPackage -AllUsers
+        Safe-Uninstall "Microsoft.$app"
     }
     success "Uninstalling default Microsoft applications..."
+    
     info "Uninstalling default third party applications..."
     foreach($app in $thirdparty_apps_to_remove) {
-        info "uninstalling $app"
-        Get-AppxPackage -all "$app" | Remove-AppxPackage -AllUsers
+        Safe-Uninstall "$app"
     }
     success "Uninstalling default third party applications..."
     info "Disabling Xbox ..."

@@ -119,6 +119,17 @@ function Safe-Remove-ItemProperty($Path,$Name,$Type,$Value) {
         warn "could not removing item property $Name of $Path"
     }
 }
+function Safe-Uninstall($Name) {
+    try {
+        info "Getting $app information"
+        $package = Get-AppxPackage -all "$app" -ErrorAction Stop | Out-Null
+        info "uninstalling $app"
+        Remove-AppxPackage -AllUsers -PackageName $package -ErrorAction Stop | Out-Null
+        success "uninstalling $app"
+    catch {
+        warn "uninstalling $app failed. possible cause is that $app was not installed at the time of executing $script_name script."
+    }
+}
 function Create-Path-If-Not-Exists($Path) {
     try {
         debug "Cheking if path $Path exists"
