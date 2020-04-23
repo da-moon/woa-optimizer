@@ -27,7 +27,14 @@ function Confirm-Aria2 {
 }
 function aria2_dl($url,$dir,$file) {
     Confirm-Aria2
-    aria2c -k 1M -c -j16 -x16 --dir="$dir" --out="$file" "$url"
+    try {
+        info "Downloading $file from $url and storing it in $dir"
+        aria2c -k 1M -c -j16 -x16 --dir="$dir" --out="$file" "$url"
+    }
+    catch
+    {
+        warn "could not downloading $file from $url"
+    }
 }
 function dl($url,$to) {
     $wc = New-Object Net.Webclient
