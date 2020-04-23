@@ -93,7 +93,7 @@ Function InstallLinuxSubsystem {
     $dir=pwd
     $file="ubuntu.appx"
     aria2_dl "$url" "$dir" "$file"
-    Add-AppxPackage"$dir\$file"
+    Add-AppxPackage "$dir\$file"
     success "Installing Linux Subsystem..."
 }
 Function AddPhotoViewerOpenWith {
