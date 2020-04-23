@@ -33,27 +33,21 @@ Function EnableFirewall {
 }
 Function DisableDefender {
 	info "Disabling Windows Defender..."
-Create-Path-If-Not-Exists "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender"
+    Create-Path-If-Not-Exists "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender"
 	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender" -Name "DisableAntiSpyware" -Type DWord -Value 1
 	Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" -Name "SecurityHealth" -ErrorAction SilentlyContinue
 	success "[DONE] Disabling Windows Defender..."
 }
 Function DisableDefenderCloud {
     info "Disabling Windows Defender Cloud..."
-Create-Path-If-Not-Exists "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet"
-    If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet")) {
-        New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet" -Force | Out-Null
-    }
+    Create-Path-If-Not-Exists "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet"
     Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet" -Name "SpynetReporting" -Type DWord -Value 0
     Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet" -Name "SubmitSamplesConsent" -Type DWord -Value 2
     success "[DONE] Disabling Windows Defender Cloud..."
 }
 Function DisableUpdateMSRT {
 	info "Disabling Malicious Software Removal Tool offering..."
-Create-Path-If-Not-Exists "HKLM:\SOFTWARE\Policies\Microsoft\MRT"
-	If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\MRT")) {
-		New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\MRT" | Out-Null
-	}
+    Create-Path-If-Not-Exists "HKLM:\SOFTWARE\Policies\Microsoft\MRT"
 	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\MRT" -Name "DontOfferThroughWUAU" -Type DWord -Value 1
 	success "[DONE] Disabling Malicious Software Removal Tool offering..."
 }
@@ -181,7 +175,7 @@ Function DisableHibernation {
     If (Test-Path "$path") {
         Set-ItemProperty -Path "$path" -Name "HibernteEnabled" -Type Dword -Value 0
     }
-Create-Path-If-Not-Exists "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FlyoutMenuSettings"
+    Create-Path-If-Not-Exists "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FlyoutMenuSettings"
 	Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FlyoutMenuSettings" -Name "ShowHibernateOption" -Type Dword -Value 0
     Start-Process 'powercfg.exe' -Verb runAs -ArgumentList '/h off'
     success "[DONE] Disabling Hibernation..."
@@ -210,7 +204,7 @@ Function DisableExtraServices {
 }
 Function DisableAutorun {
 	info "Disabling Autorun for all drives..."
-Create-Path-If-Not-Exists "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer"
+    Create-Path-If-Not-Exists "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer"
 	Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" -Name "NoDriveTypeAutoRun" -Type DWord -Value 255
 	success "[DONE] Disabling Autorun for all drives..."
 }
