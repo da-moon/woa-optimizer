@@ -290,7 +290,12 @@ Function EnableFileDeleteConfirm {
 	success "Enabling file delete confirmation dialog..."
 }
 Function SetDEPOptOut {
-	info "Setting Data Execution Prevention (DEP) policy to OptOut..."
-	bcdedit /set `{current`} nx OptOut | Out-Null
-	success "Setting Data Execution Prevention (DEP) policy to OptOut..."
+    info "Setting Data Execution Prevention (DEP) policy to OptOut..."
+    try {
+        bcdedit /set `{current`} nx OptOut | Out-Null
+        success "Setting Data Execution Prevention (DEP) policy to OptOut..."
+    }
+    catch{
+        warn "could not ser Data Execution Prevention (DEP) policy to OptOut. Possibly, bcdedit was not present in path"
+    }
 }
