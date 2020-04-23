@@ -417,7 +417,7 @@ $libs= @(
 foreach($lib in $libs) {
     info "$script_name Loading $lib"
     Invoke-Expression (new-object net.webclient).downloadstring("$base_url/$lib")
-    success "[DONE] $script_name Loading $lib"
+    success "$script_name Loading $lib"
 }
 $old_erroractionpreference = $erroractionpreference
 $erroractionpreference = 'stop' # quit if anything goes wrong
@@ -476,7 +476,7 @@ If ($args) {
 foreach($tweak in $tweaks) {
 	Invoke-Expression $tweak
 }
-success "[DONE] $script_name ran wirhout any issues successfully!"
+success "$script_name ran wirhout any issues successfully!"
 $erroractionpreference = $old_erroractionpreference # Reset $erroractionpreference to original value
 WaitForKey
 Restart

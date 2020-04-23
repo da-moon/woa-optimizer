@@ -3,7 +3,7 @@ function abort($msg, [int] $exit_code=1) {
     exit $exit_code
 }
 function error($msg) { 
-    write-host "ERROR $msg" -f darkred 
+    write-host "[ERROR] $msg" -f darkred 
 }
 function warn($msg) {
       write-host "[WARN]  $msg" -f darkyellow 
@@ -17,5 +17,5 @@ function debug($msg) {
     }
 }
 function success($msg) { 
-    write-host $msg -f darkgreen 
+    write-host  "[DONE] $msg" -f darkgreen 
 }

@@ -2,7 +2,7 @@ Function DisableLockScreen {
 	info "Disabling Lock screen..."
     Create-Path-If-Not-Exists "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization"
 	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization" -Name "NoLockScreen" -Type DWord -Value 1
-	success "[DONE] Disabling Lock screen..."
+	success "Disabling Lock screen..."
 }
 Function EnableLockScreen {
     info "Enabling Lock screen..."
@@ -10,7 +10,7 @@ Function EnableLockScreen {
     If (Test-Path "$path") {
         Remove-ItemProperty  -Path "$path" -Name "NoLockScreen" -ErrorAction SilentlyContinue
     }
-    success "[DONE] Enabling Lock screen..."
+    success "Enabling Lock screen..."
 }
 Function DisableLockScreenRS1 {
 	info "Disabling Lock screen using scheduler workaround..."
@@ -25,12 +25,12 @@ Function DisableLockScreenRS1 {
 	$action.Path = "reg.exe"
 	$action.Arguments = "add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\SessionData /t REG_DWORD /v AllowLockScreen /d 0 /f"
 	$service.GetFolder("\").RegisterTaskDefinition("Disable LockScreen", $task, 6, "NT AUTHORITY\SYSTEM", $null, 4) | Out-Null
-	success "[DONE] Disabling Lock screen using scheduler workaround..."
+	success "Disabling Lock screen using scheduler workaround..."
 }
 Function EnableLockScreenRS1 {
 	info "Enabling Lock screen (removing scheduler workaround)..."
 	Unregister-ScheduledTask -TaskName "Disable LockScreen" -Confirm:$false -ErrorAction SilentlyContinue
-	success "[DONE] Enabling Lock screen (removing scheduler workaround)..."
+	success "Enabling Lock screen (removing scheduler workaround)..."
 }
 Function HideShutdownFromLockScreen {
     info "Hiding shutdown options from Lock Screen..."
@@ -38,7 +38,7 @@ Function HideShutdownFromLockScreen {
     If (Test-Path "$path") {
         Set-ItemProperty -Path "$path" -Name "ShutdownWithoutLogon" -Type DWord -Value 0
     }
-    success "[DONE] Hiding shutdown options from Lock Screen..."
+    success "Hiding shutdown options from Lock Screen..."
 }
 Function ShowShutdownOnLockScreen {
     info "Showing shutdown options on Lock Screen..."
@@ -46,7 +46,7 @@ Function ShowShutdownOnLockScreen {
     If (Test-Path "$path") {
         Set-ItemProperty -Path "$path" -Name "ShutdownWithoutLogon" -Type DWord -Value 1
     }
-    success "[DONE] Showing shutdown options on Lock Screen..."
+    success "Showing shutdown options on Lock Screen..."
 }
 Function DisableStickyKeys {
     info "Disabling Sticky keys prompt..."
@@ -54,7 +54,7 @@ Function DisableStickyKeys {
     If (Test-Path "$path") {
         Set-ItemProperty -Path "$path" -Name "Flags" -Type String -Value "506"
     }
-    success "[DONE] Disabling Sticky keys prompt..."
+    success "Disabling Sticky keys prompt..."
 }
 Function EnableStickyKeys {
     info "Enabling Sticky keys prompt..."
@@ -62,7 +62,7 @@ Function EnableStickyKeys {
     If (Test-Path "$path") {
         Set-ItemProperty -Path "$path" -Name "Flags" -Type String -Value "510"
     }
-    success "[DONE] Enabling Sticky keys prompt..."
+    success "Enabling Sticky keys prompt..."
 }
 Function HideTaskbarSearchBox {
     info "Hiding Taskbar Search box / button..."
@@ -70,7 +70,7 @@ Function HideTaskbarSearchBox {
     If (Test-Path "$path") {
         Set-ItemProperty -Path "$path" -Name "SearchboxTaskbarMode" -Type DWord -Value 0
     }
-    success "[DONE] Hiding Taskbar Search box / button..."
+    success "Hiding Taskbar Search box / button..."
 }
 Function ShowTaskbarSearchBox {
     info "Showing Taskbar Search box / button..."
@@ -78,7 +78,7 @@ Function ShowTaskbarSearchBox {
     If (Test-Path "$path") {
         Remove-ItemProperty  -Path "$path" -Name "SearchboxTaskbarMode" -ErrorAction SilentlyContinue
     }
-    success "[DONE] Showing Taskbar Search box / button..."
+    success "Showing Taskbar Search box / button..."
 }
 Function HideTaskView {
     info "Hiding Task View button..."
@@ -86,7 +86,7 @@ Function HideTaskView {
     If (Test-Path "$path") {
         Set-ItemProperty -Path "$path" -Name "ShowTaskViewButton" -Type DWord -Value 0
     }
-    success "[DONE] Hiding Task View button..."
+    success "Hiding Task View button..."
 }
 Function ShowTaskView {
     info "Showing Task View button..."
@@ -94,7 +94,7 @@ Function ShowTaskView {
     If (Test-Path "$path") {
         Remove-ItemProperty  -Path "$path" -Name "ShowTaskViewButton" -ErrorAction SilentlyContinue
     }
-    success "[DONE] Showing Task View button..."
+    success "Showing Task View button..."
 }
 Function ShowSmallTaskbarIcons {
     info "Showing small icons in taskbar..."
@@ -102,7 +102,7 @@ Function ShowSmallTaskbarIcons {
     If (Test-Path "$path") {
         Set-ItemProperty -Path "$path" -Name "TaskbarSmallIcons" -Type DWord -Value 1
     }
-    success "[DONE] Showing small icons in taskbar..."
+    success "Showing small icons in taskbar..."
 }
 Function ShowLargeTaskbarIcons {
     info "Showing large icons in taskbar..."
@@ -110,7 +110,7 @@ Function ShowLargeTaskbarIcons {
     If (Test-Path "$path") {
         Remove-ItemProperty  -Path "$path"  -Name "TaskbarSmallIcons" -ErrorAction SilentlyContinue
     }
-    success "[DONE] Showing large icons in taskbar..."
+    success "Showing large icons in taskbar..."
 }
 Function ShowTaskbarTitles {
     info "Showing titles in taskbar..."
@@ -118,7 +118,7 @@ Function ShowTaskbarTitles {
     If (Test-Path "$path") {
         Set-ItemProperty -Path "$path" -Name "TaskbarGlomLevel" -Type DWord -Value 1
     }
-    success "[DONE] Showing titles in taskbar..."
+    success "Showing titles in taskbar..."
 }
 Function HideTaskbarTitles {
     info "Hiding titles in taskbar..."
@@ -126,7 +126,7 @@ Function HideTaskbarTitles {
     If (Test-Path "$path") {
         Remove-ItemProperty  -Path "$path" -Name "TaskbarGlomLevel" -ErrorAction SilentlyContinue
     }
-    success "[DONE] Hiding titles in taskbar..."
+    success "Hiding titles in taskbar..."
 }
 Function ShowTaskManagerDetails {
 	info "Showing task manager details..."
@@ -142,7 +142,7 @@ Function ShowTaskManagerDetails {
 	}
 	$preferences.Preferences[28] = 0
 	Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\TaskManager" -Name "Preferences" -Type Binary -Value $preferences.Preferences
-	success "[DONE] Showing task manager details..."
+	success "Showing task manager details..."
 }
 Function HideTaskManagerDetails {
 	info "Hiding task manager details..."
@@ -151,13 +151,13 @@ Function HideTaskManagerDetails {
 		$preferences.Preferences[28] = 1
 		Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\TaskManager" -Name "Preferences" -Type Binary -Value $preferences.Preferences
 	}
-	success "[DONE] Hiding task manager details..."
+	success "Hiding task manager details..."
 }
 Function ShowFileOperationsDetails {
 	info "Showing file operations details..."
     Create-Path-If-Not-Exists "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\OperationStatusManager"
 	Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\OperationStatusManager" -Name "EnthusiastMode" -Type DWord -Value 1
-	success "[DONE] Showing file operations details..."
+	success "Showing file operations details..."
 }
 Function HideFileOperationsDetails {
     info "Hiding file operations details..."
@@ -165,7 +165,7 @@ Function HideFileOperationsDetails {
     If (Test-Path "$path") {
         Remove-ItemProperty  -Path "$path" -Name "EnthusiastMode" -ErrorAction SilentlyContinue
     }
-    success "[DONE] Hiding file operations details..."
+    success "Hiding file operations details..."
 }
 Function Hide3DObjectsFromThisPC {
     info "Hiding 3D Objects icon from This PC..."
@@ -173,13 +173,13 @@ Function Hide3DObjectsFromThisPC {
     If (Test-Path "$path") {
         Remove-Item  -Path "$path" -Recurse -ErrorAction SilentlyContinue
     }
-    success "[DONE] Hiding 3D Objects icon from This PC..."
+    success "Hiding 3D Objects icon from This PC..."
 }
 Function HideTaskbarPeopleIcon {
 	info "Hiding People icon..."
     Create-Path-If-Not-Exists "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\People"
 	Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\People" -Name "PeopleBand" -Type DWord -Value 0
-	success "[DONE] Hiding People icon..."
+	success "Hiding People icon..."
 }
 Function ShowTrayIcons {
     info "Showing all tray icons..."
@@ -187,7 +187,7 @@ Function ShowTrayIcons {
     If (Test-Path "$path") {
         Set-ItemProperty -Path "$path" -Name "EnableAutoTray" -Type DWord -Value 0
     }
-    success "[DONE] Showing all tray icons..."
+    success "Showing all tray icons..."
 }
 Function ShowKnownExtensions {
     info "Showing known file extensions..."
@@ -195,7 +195,7 @@ Function ShowKnownExtensions {
     If (Test-Path "$path") {
         Set-ItemProperty -Path "$path" -Name "HideFileExt" -Type DWord -Value 0
     }
-    success "[DONE] Showing known file extensions..."
+    success "Showing known file extensions..."
 }
 Function ShowHiddenFiles {
     info "Showing hidden files..."
@@ -203,7 +203,7 @@ Function ShowHiddenFiles {
     If (Test-Path "$path") {
         Set-ItemProperty -Path "$path" -Name "Hidden" -Type DWord -Value 1
     }
-    success "[DONE] Showing hidden files..."
+    success "Showing hidden files..."
 }
 Function HideSyncNotifications {
     info "Hiding sync provider notifications..."
@@ -211,7 +211,7 @@ Function HideSyncNotifications {
     If (Test-Path "$path") {
         Set-ItemProperty -Path "$path" -Name "ShowSyncProviderNotifications" -Type DWord -Value 0
     }
-    success "[DONE] Hiding sync provider notifications..."
+    success "Hiding sync provider notifications..."
 }
 Function HideRecentShortcuts {
     info "Hiding recent shortcuts..."
@@ -220,7 +220,7 @@ Function HideRecentShortcuts {
         Set-ItemProperty -Path "$path" -Name "ShowRecent" -Type DWord -Value 0
         Set-ItemProperty -Path "$path" -Name "ShowFrequent" -Type DWord -Value 0
     }
-    success "[DONE] Hiding recent shortcuts..."
+    success "Hiding recent shortcuts..."
 }
 Function SetExplorerThisPC {
     info "Changing default Explorer view to This PC..."
@@ -228,7 +228,7 @@ Function SetExplorerThisPC {
     If (Test-Path "$path") {
         Set-ItemProperty -Path "$path" -Name "LaunchTo" -Type DWord -Value 1
     }
-    success "[DONE] Changing default Explorer view to This PC..."
+    success "Changing default Explorer view to This PC..."
 }
 Function ShowThisPCOnDesktop {
 	info "Showing This PC shortcut on desktop..."
@@ -236,7 +236,7 @@ Function ShowThisPCOnDesktop {
 	Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\ClassicStartMenu" -Name "{20D04FE0-3AEA-1069-A2D8-08002B30309D}" -Type DWord -Value 0
     Create-Path-If-Not-Exists "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel"
 	Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel" -Name "{20D04FE0-3AEA-1069-A2D8-08002B30309D}" -Type DWord -Value 0
-	success "[DONE] Showing This PC shortcut on desktop..."
+	success "Showing This PC shortcut on desktop..."
 }
 Function ShowUserFolderOnDesktop {
 	info "Showing User Folder shortcut on desktop..."
@@ -244,7 +244,7 @@ Function ShowUserFolderOnDesktop {
 	Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\ClassicStartMenu" -Name "{59031a47-3f72-44a7-89c5-5595fe6b30ee}" -Type DWord -Value 0
     Create-Path-If-Not-Exists "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel"
 	Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel" -Name "{59031a47-3f72-44a7-89c5-5595fe6b30ee}" -Type DWord -Value 0
-	success "[DONE] Showing User Folder shortcut on desktop..."
+	success "Showing User Folder shortcut on desktop..."
 }
 # Adjusts visual effects for performance - 
 # Disables animations, transparency etc. but leaves font smoothing and miniatures enabled
@@ -260,7 +260,7 @@ Function SetVisualFXPerformance {
 	Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "TaskbarAnimations" -Type DWord -Value 0
 	Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects" -Name "VisualFXSetting" -Type DWord -Value 3
 	Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\DWM" -Name "EnableAeroPeek" -Type DWord -Value 0
-	success "[DONE] Adjusting visual effects for performance..."
+	success "Adjusting visual effects for performance..."
 }
 Function DisableThumbnails {
     info "Disabling thumbnails..."
@@ -268,7 +268,7 @@ Function DisableThumbnails {
     If (Test-Path "$path") {
         Set-ItemProperty -Path "$path" -Name "IconsOnly" -Type DWord -Value 1
     }
-    success "[DONE] Disabling thumbnails..."
+    success "Disabling thumbnails..."
 }
 Function DisableThumbsDB {
     info "Disabling creation of Thumbs.db..."
@@ -277,7 +277,7 @@ Function DisableThumbsDB {
         Set-ItemProperty -Path "$path" -Name "DisableThumbnailCache" -Type DWord -Value 1
         Set-ItemProperty -Path "$path" -Name "DisableThumbsDBOnNetworkFolders" -Type DWord -Value 1
     }
-    success "[DONE] Disabling creation of Thumbs.db..."
+    success "Disabling creation of Thumbs.db..."
 }
 Function EnableNumlock {
 	info "Enabling NumLock after startup..."
@@ -293,13 +293,13 @@ Function EnableNumlock {
 		$wsh = New-Object -ComObject WScript.Shell
 		$wsh.SendKeys('{NUMLOCK}')
 	}
-	success "[DONE] Enabling NumLock after startup..."
+	success "Enabling NumLock after startup..."
 }
 Function EnableFileDeleteConfirm {
 	info "Enabling file delete confirmation dialog..."
     Create-Path-If-Not-Exists "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer"
 	Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" -Name "ConfirmFileDelete" -Type DWord -Value 1
-	success "[DONE] Enabling file delete confirmation dialog..."
+	success "Enabling file delete confirmation dialog..."
 }
 Function DisableFileDeleteConfirm {
     info "Disabling file delete confirmation dialog..."
@@ -307,7 +307,7 @@ Function DisableFileDeleteConfirm {
     If (Test-Path "$path") {
         Remove-ItemProperty  -Path "$path" -Name "ConfirmFileDelete" -ErrorAction SilentlyContinue
     }
-    success "[DONE] Disabling file delete confirmation dialog..."
+    success "Disabling file delete confirmation dialog..."
 }
 Function HideTaskbarSearchBox {
     info "Hiding Taskbar Search box / button..."
@@ -315,7 +315,7 @@ Function HideTaskbarSearchBox {
     If (Test-Path "$path") {
         Set-ItemProperty -Path "$path" -Name "SearchboxTaskbarMode" -Type DWord -Value 0
     }
-    success "[DONE] Hiding Taskbar Search box / button..."
+    success "Hiding Taskbar Search box / button..."
 }
 Function ShowTaskbarSearchBox {
     info "Showing Taskbar Search box / button..."
@@ -323,16 +323,16 @@ Function ShowTaskbarSearchBox {
     If (Test-Path "$path") {
         Remove-ItemProperty  -Path "$path" -Name "SearchboxTaskbarMode" -ErrorAction SilentlyContinue
     }
-    success "[DONE] Showing Taskbar Search box / button..."
+    success "Showing Taskbar Search box / button..."
 }
 Function EnableFileDeleteConfirm {
 	info "Enabling file delete confirmation dialog..."
     Create-Path-If-Not-Exists "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer"
 	Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" -Name "ConfirmFileDelete" -Type DWord -Value 1
-	success "[DONE] Enabling file delete confirmation dialog..."
+	success "Enabling file delete confirmation dialog..."
 }
 Function SetDEPOptOut {
 	info "Setting Data Execution Prevention (DEP) policy to OptOut..."
 	bcdedit /set `{current`} nx OptOut | Out-Null
-	success "[DONE] Setting Data Execution Prevention (DEP) policy to OptOut..."
+	success "Setting Data Execution Prevention (DEP) policy to OptOut..."
 }
