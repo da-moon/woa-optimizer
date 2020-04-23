@@ -34,7 +34,7 @@ Function UninstallBloat {
         Safe-Uninstall "Microsoft.$app"
     }
     success "Uninstalling default Microsoft applications..."
-    
+
     info "Uninstalling default third party applications..."
     foreach($app in $thirdparty_apps_to_remove) {
         Safe-Uninstall "$app"
@@ -89,7 +89,6 @@ Function InstallLinuxSubsystem {
     Safe-Set-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock" "AllowDevelopmentWithoutDevLicense" DWord 1
     Safe-Set-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock" "AllowAllTrustedApps" DWord 1
     Enable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Windows-Subsystem-Linux" -NoRestart -WarningAction SilentlyContinue | Out-Null
-    C:\windows\system32\wsl.exe --set-default-version 2
     $url="https://aka.ms/wsl-ubuntu-1804-arm"
     $dir=pwd
     $file="ubuntu.appx"
