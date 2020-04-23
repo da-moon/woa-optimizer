@@ -436,13 +436,12 @@ if ((Get-ExecutionPolicy).ToString() -notin $allowedExecutionPolicy) {
 }
 RequireAdmin
 # parsing flags
-$opt, $apps, $err = getopt $args 'd' 'dependancies', 'debug'
+$opt, $apps, $err = getopt $args 'd' 'dependancies'
 if ($err) {
     error "Could not parse flags : $err"
     exit 1
 }
 $dependancies = $opt.d -or $opt.dependancies
-$debug = $opt.debug
 if ((Get-Command "scoop" -ErrorAction SilentlyContinue) -eq $null) 
 { 
 	warn "Unable to find scoop in your PATH"
