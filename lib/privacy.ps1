@@ -25,9 +25,9 @@ Function DisableWiFiSense {
 Function DisableSmartScreen {
     info "Disabling SmartScreen Filter..."
     $path="HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer"
-    Safe-Set-ItemProperty "$path"  "SmartScreenEnabled"  String  "Off"
+    Safe-Set-ItemProperty "$path" "SmartScreenEnabled" String "Off"
     $path="HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\AppHost"
-    Safe-Set-ItemProperty "$path"  "EnableWebContentEvaluation"  DWord  0
+    Safe-Set-ItemProperty "$path" "EnableWebContentEvaluation" DWord 0
 	$edge = (Get-AppxPackage -AllUsers "Microsoft.MicrosoftEdge").PackageFamilyName
     $path="HKCU:\SOFTWARE\Classes\Local Settings\Software\Microsoft\Windows\CurrentVersion\AppContainer\Storage\$edge\MicrosoftEdge\PhishingFilter"
     Create-Path-If-Not-Exists "$path"
@@ -36,24 +36,24 @@ Function DisableSmartScreen {
         "PreventOverride"
     )
     foreach($name in $names) {
-        Safe-Set-ItemProperty "$path"  "$name"  DWord  0
+        Safe-Set-ItemProperty "$path" "$name" DWord 0
     }
     success "Disabling SmartScreen Filter..."
 }
 Function DisableWebSearch {
     info "Disabling Bing Search in Start Menu..."
     $path="HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search"
-    Safe-Set-ItemProperty "$path"  "BingSearchEnabled"  DWord  0
+    Safe-Set-ItemProperty "$path" "BingSearchEnabled" DWord 0
     Create-Path-If-Not-Exists "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search"
-    Safe-Set-ItemProperty "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search"  "DisableWebSearch"  DWord  1
+    Safe-Set-ItemProperty "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search" "DisableWebSearch" DWord 1
     success "Disabling Bing Search in Start Menu..."
 }
 Function DisableBackgroundApps {
     info "Disabling Background application access..."
     $path="HKCU:\Software\Microsoft\Windows\CurrentVersion\BackgroundAccessApplications"
     Get-ChildItem "$path" | ForEach-Object {
-        Safe-Set-ItemProperty $_.PsPath  "Disabled"  DWord  1
-        Safe-Set-ItemProperty $_.PsPath  "DisabledByUser"  DWord  1
+        Safe-Set-ItemProperty $_.PsPath  "Disabled" DWord 1
+        Safe-Set-ItemProperty $_.PsPath  "DisabledByUser" DWord 1
     }
     success "Disabling Background application access..."
 }
@@ -66,7 +66,7 @@ Function DisableLockScreenSpotlight {
         "SubscribedContent-338387Enabled"
     )
     foreach($name in $names) {
-        Safe-Set-ItemProperty "$path"  "$name"  DWord  0
+        Safe-Set-ItemProperty "$path" "$name" DWord 0
     }
     success "Disabling Lock screen spotlight..."
 }
@@ -78,20 +78,20 @@ Function DisableLocationTracking {
     }
     $paths.GetEnumerator() | ForEach-Object {
         $path=$_.Key
-        Safe-Set-ItemProperty "$path"  $_.Value  DWord  0
+        Safe-Set-ItemProperty "$path"  $_.Value DWord 0
     }
     success "Disabling Location Tracking..."
 }
 Function DisableMapUpdates {
     info "Disabling automatic Maps updates..."
     $path="HKLM:\SYSTEM\Maps"
-    Safe-Set-ItemProperty "$path"  "AutoUpdateEnabled"  DWord  0
+    Safe-Set-ItemProperty "$path" "AutoUpdateEnabled" DWord 0
     success "Disabling automatic Maps updates..."
 }
 Function DisableFeedback {
 	info "Disabling Feedback..."
     Create-Path-If-Not-Exists "HKCU:\SOFTWARE\Microsoft\Siuf\Rules"
-    Safe-Set-ItemProperty "HKCU:\SOFTWARE\Microsoft\Siuf\Rules"  "NumberOfSIUFInPeriod"  DWord  0
+    Safe-Set-ItemProperty "HKCU:\SOFTWARE\Microsoft\Siuf\Rules" "NumberOfSIUFInPeriod" DWord 0
 	success "Disabling Feedback..."
 }
 Function DisableAdvertisingID {
@@ -103,27 +103,27 @@ Function DisableAdvertisingID {
     $paths.GetEnumerator() | ForEach-Object {
         $path=$_.Key
         Create-Path-If-Not-Exists "$path"
-        Safe-Set-ItemProperty "$path"  $_.Value  DWord  0
+        Safe-Set-ItemProperty "$path"  $_.Value DWord 0
     }
 	success "Disabling Advertising ID..."
 }
 Function DisableCortana {
     info "Disabling Cortana..."
     Create-Path-If-Not-Exists "HKCU:\SOFTWARE\Microsoft\Personalization\Settings"
-    Safe-Set-ItemProperty "HKCU:\SOFTWARE\Microsoft\Personalization\Settings"  "AcceptedPrivacyPolicy"  DWord  0
+    Safe-Set-ItemProperty "HKCU:\SOFTWARE\Microsoft\Personalization\Settings" "AcceptedPrivacyPolicy" DWord 0
     Create-Path-If-Not-Exists "HKCU:\SOFTWARE\Microsoft\InputPersonalization"
-    Safe-Set-ItemProperty "HKCU:\SOFTWARE\Microsoft\InputPersonalization"  "RestrictImplicitTextCollection"  DWord  1
-    Safe-Set-ItemProperty "HKCU:\SOFTWARE\Microsoft\InputPersonalization"  "RestrictImplicitInkCollection"  DWord  1
+    Safe-Set-ItemProperty "HKCU:\SOFTWARE\Microsoft\InputPersonalization" "RestrictImplicitTextCollection" DWord 1
+    Safe-Set-ItemProperty "HKCU:\SOFTWARE\Microsoft\InputPersonalization" "RestrictImplicitInkCollection" DWord 1
     Create-Path-If-Not-Exists "HKCU:\SOFTWARE\Microsoft\InputPersonalization\TrainedDataStore"	
-    Safe-Set-ItemProperty "HKCU:\SOFTWARE\Microsoft\InputPersonalization\TrainedDataStore"  "HarvestContacts"  DWord  0
+    Safe-Set-ItemProperty "HKCU:\SOFTWARE\Microsoft\InputPersonalization\TrainedDataStore" "HarvestContacts" DWord 0
     Create-Path-If-Not-Exists "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search"
-    Safe-Set-ItemProperty "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search"  "AllowCortana"  DWord  0
+    Safe-Set-ItemProperty "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search" "AllowCortana" DWord 0
     success "Disabling Cortana..."
 }
 Function DisableErrorReporting {
     info "Disabling Error reporting..."
     $path="HKLM:\SOFTWARE\Microsoft\Windows\Windows Error Reporting"
-    Safe-Set-ItemProperty "$path"  "Disabled"  DWord  1
+    Safe-Set-ItemProperty "$path" "Disabled" DWord 1
     success "Disabling Error reporting..."
 }
 Function DisableAutoLogger {
@@ -162,8 +162,8 @@ Function DisableAppSuggestions {
         "SubscribedContent-338388Enabled" 
     )
     foreach($name in $names) {
-        Safe-Set-ItemProperty "$path"  "$name"  DWord  0
+        Safe-Set-ItemProperty "$path" "$name" DWord 0
     }
     Create-Path-If-Not-Exists "HKLM:\SOFTWARE\Policies\Microsoft\Windows\CloudContent"
-    Safe-Set-ItemProperty "HKLM:\SOFTWARE\Policies\Microsoft\Windows\CloudContent"  "DisableWindowsConsumerFeatures"  DWord  1
+    Safe-Set-ItemProperty "HKLM:\SOFTWARE\Policies\Microsoft\Windows\CloudContent" "DisableWindowsConsumerFeatures" DWord 1
 }

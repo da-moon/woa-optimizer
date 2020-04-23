@@ -1,7 +1,7 @@
 Function DisableOneDrive {
 	info "Disabling OneDrive..."
     Create-Path-If-Not-Exists "HKLM:\SOFTWARE\Policies\Microsoft\Windows\OneDrive"
-    Safe-Set-ItemProperty "HKLM:\SOFTWARE\Policies\Microsoft\Windows\OneDrive"  "DisableFileSyncNGSC"  DWord  1
+    Safe-Set-ItemProperty "HKLM:\SOFTWARE\Policies\Microsoft\Windows\OneDrive" "DisableFileSyncNGSC" DWord 1
 	success "Disabling OneDrive..."
 }
 Function UninstallOneDrive {
@@ -45,9 +45,9 @@ Function UninstallBloat {
   
     info "Disabling Xbox ..."
     # xbox ....
-    Safe-Set-ItemProperty "HKCU:\System\GameConfigStore"  "GameDVR_Enabled"  DWord  0
+    Safe-Set-ItemProperty "HKCU:\System\GameConfigStore" "GameDVR_Enabled" DWord 0
     Create-Path-If-Not-Exists "HKLM:\SOFTWARE\Policies\Microsoft\Windows\GameDVR"
-    Safe-Set-ItemProperty "HKLM:\SOFTWARE\Policies\Microsoft\Windows\GameDVR"  "AllowGameDVR"  DWord  0
+    Safe-Set-ItemProperty "HKLM:\SOFTWARE\Policies\Microsoft\Windows\GameDVR" "AllowGameDVR" DWord 0
     success "Disabling Xbox ..."
   
     success "Removing Windows Bloatware ..."
@@ -67,9 +67,9 @@ Function InstallWindowsStore {
 Function DisableAdobeFlash {
 	info "Disabling built-in Adobe Flash in IE and Edge..."
     Create-Path-If-Not-Exists "HKCU:\Software\Classes\Local Settings\Software\Microsoft\Windows\CurrentVersion\AppContainer\Storage\microsoft.microsoftedge_8wekyb3d8bbwe\MicrosoftEdge\Addons"
-    Safe-Set-ItemProperty "HKCU:\Software\Classes\Local Settings\Software\Microsoft\Windows\CurrentVersion\AppContainer\Storage\microsoft.microsoftedge_8wekyb3d8bbwe\MicrosoftEdge\Addons"  "FlashPlayerEnabled"  DWord  0
+    Safe-Set-ItemProperty "HKCU:\Software\Classes\Local Settings\Software\Microsoft\Windows\CurrentVersion\AppContainer\Storage\microsoft.microsoftedge_8wekyb3d8bbwe\MicrosoftEdge\Addons" "FlashPlayerEnabled" DWord 0
     Create-Path-If-Not-Exists "HKCU:\Software\Microsoft\Windows\CurrentVersion\Ext\Settings\{D27CDB6E-AE6D-11CF-96B8-444553540000}"
-    Safe-Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Ext\Settings\{D27CDB6E-AE6D-11CF-96B8-444553540000}"  "Flags"  DWord  1
+    Safe-Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Ext\Settings\{D27CDB6E-AE6D-11CF-96B8-444553540000}" "Flags" DWord 1
 	success "Disabling built-in Adobe Flash in IE and Edge..."
 }
 Function UninstallMediaPlayer {
@@ -90,8 +90,8 @@ Function UninstallWorkFolders {
 }
 Function InstallLinuxSubsystem {
     info "Installing Linux Subsystem..."
-    Safe-Set-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock"  "AllowDevelopmentWithoutDevLicense"  DWord  1
-    Safe-Set-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock"  "AllowAllTrustedApps"  DWord  1
+    Safe-Set-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock" "AllowDevelopmentWithoutDevLicense" DWord 1
+    Safe-Set-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock" "AllowAllTrustedApps" DWord 1
     Enable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Windows-Subsystem-Linux" -NoRestart -WarningAction SilentlyContinue | Out-Null
     C:\windows\system32\wsl.exe --set-default-version 2
     $url="https://aka.ms/wsl-ubuntu-1804-arm"
@@ -108,15 +108,15 @@ Function AddPhotoViewerOpenWith {
 	}
 	New-Item -Path "HKCR:\Applications\photoviewer.dll\shell\open\command" -Force | Out-Null
 	New-Item -Path "HKCR:\Applications\photoviewer.dll\shell\open\DropTarget" -Force | Out-Null
-    Safe-Set-ItemProperty "HKCR:\Applications\photoviewer.dll\shell\open"  "MuiVerb"  String  "@photoviewer.dll,-3043"
-    Safe-Set-ItemProperty "HKCR:\Applications\photoviewer.dll\shell\open\command"  "(Default)"  ExpandString   "%SystemRoot%\System32\rundll32.exe `"%ProgramFiles%\Windows Photo Viewer\PhotoViewer.dll`", ImageView_Fullscreen %1"
-    Safe-Set-ItemProperty "HKCR:\Applications\photoviewer.dll\shell\open\DropTarget"  "Clsid"  String "{FFE2A43C-56B9-4bf5-9A79-CC6D4285608A}"
+    Safe-Set-ItemProperty "HKCR:\Applications\photoviewer.dll\shell\open" "MuiVerb" String "@photoviewer.dll,-3043"
+    Safe-Set-ItemProperty "HKCR:\Applications\photoviewer.dll\shell\open\command" "(Default)"  ExpandString   "%SystemRoot%\System32\rundll32.exe `"%ProgramFiles%\Windows Photo Viewer\PhotoViewer.dll`", ImageView_Fullscreen %1"
+    Safe-Set-ItemProperty "HKCR:\Applications\photoviewer.dll\shell\open\DropTarget" "Clsid"  String "{FFE2A43C-56B9-4bf5-9A79-CC6D4285608A}"
 	info "Adding Photo Viewer to `"Open with...`""
 }
 Function DisableSearchAppInStore {
 	info "Disabling search for app in store for unknown extensions..."
     Create-Path-If-Not-Exists "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer"
-    Safe-Set-ItemProperty "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer"  "NoUseStoreOpenWith"  DWord  1
+    Safe-Set-ItemProperty "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer" "NoUseStoreOpenWith" DWord 1
 	success "Disabling search for app in store for unknown extensions..."
 }
 Function EnableSearchAppInStore {
@@ -127,7 +127,7 @@ Function EnableSearchAppInStore {
 Function DisableNewAppPrompt {
 	info "Disabling 'How do you want to open this file?' prompt..."
     Create-Path-If-Not-Exists "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer"
-    Safe-Set-ItemProperty "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer"  "NoNewAppAlert"  DWord  1
+    Safe-Set-ItemProperty "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer" "NoNewAppAlert" DWord 1
 	success "Disabling 'How do you want to open this file?' prompt..."
 }
 Function EnableNewAppPrompt {
@@ -209,7 +209,7 @@ Function DisableCompatibilityAppraiser {
 }
 Function DisableConnectedStandby {
     info "Disabling Connected Standby..."
-    Safe-Set-ItemProperty "HKLM:\SYSTEM\\CurrentControlSet\Control\Power"  "CSEnabled"  DWord  0
+    Safe-Set-ItemProperty "HKLM:\SYSTEM\\CurrentControlSet\Control\Power" "CSEnabled" DWord 0
     success "Disabling Connected Standby..."
 }
 Function EnableBigDesktopIcons {
