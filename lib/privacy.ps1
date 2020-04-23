@@ -7,7 +7,7 @@ Function DisableTelemetry {
         "HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Policies\DataCollection"
     )
     foreach($path in $paths) {
-        Safe-Set-ItemProperty("$path","AllowTelemetry","DWord",0)
+        Safe-Set-ItemProperty "$path" "AllowTelemetry" DWord 0
         # If (Test-Path "$path") {
         #     Set-ItemProperty -Path "$path" -Name "AllowTelemetry" -Type DWord -Value 0
         # }
