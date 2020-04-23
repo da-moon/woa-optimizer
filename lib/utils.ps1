@@ -113,17 +113,7 @@ function getopt($argv, $shortopts, $longopts) {
 
     $opts, $rem
 }
-function Safe-Set-ItemProperty {
-    param (
-        [parameter(Mandatory=$true)]
-            [ValidateNotNullOrEmpty()]$Path,
-        [parameter(Mandatory=$true)]
-            [ValidateNotNullOrEmpty()]$Name,
-        [parameter(Mandatory=$true)]
-            [ValidateNotNullOrEmpty()]$Type,
-        [parameter(Mandatory=$true)]
-            [ValidateNotNullOrEmpty()]$Value
-    )
+function Safe-Set-ItemProperty($Path,$Name,$Type,$Value) {
     try {
         debug "setting path $Path with name $Name , type $Type and value $Value"
         Set-ItemProperty -Path "$path" -Name "$Name" -Type $Type -Value $Value -ErrorAction Stop | Out-Null
