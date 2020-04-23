@@ -121,11 +121,9 @@ function Safe-Remove-ItemProperty($Path,$Name,$Type,$Value) {
 }
 function Safe-Uninstall($app) {
     try {
-        debug "Getting $app information"
-        $package= Get-AppxPackage -all "$app" -ErrorAction Stop | Out-Null
         info "uninstalling $package"
-        # Remove-AppxPackage -AllUsers -PackageName $package -ErrorAction Stop | Out-Null
-        # success "uninstalling $app"
+        Get-AppxPackage -all "$app" | Remove-AppxPackage -AllUsers
+        success "uninstalling $app"
     }
     catch {
         warn "uninstalling $app failed. possible cause is that $app was not installed at the time of executing $script_name script."
