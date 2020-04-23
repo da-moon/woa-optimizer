@@ -22,9 +22,7 @@ Function EnableCtrldFolderAccess {
 }
 Function DisableFirewall {
 	info "Disabling Firewall..."
-	If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\StandardProfile")) {
-		New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\StandardProfile" -Force | Out-Null
-	}
+    Create-Path-If-Not-Exists "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\StandardProfile"
 	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\StandardProfile" -Name "EnableFirewall" -Type DWord -Value 0
 	success "[DONE] Disabling Firewall..."
 }
@@ -35,15 +33,14 @@ Function EnableFirewall {
 }
 Function DisableDefender {
 	info "Disabling Windows Defender..."
-	If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender")) {
-		New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender" -Force | Out-Null
-	}
+Create-Path-If-Not-Exists "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender"
 	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender" -Name "DisableAntiSpyware" -Type DWord -Value 1
 	Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" -Name "SecurityHealth" -ErrorAction SilentlyContinue
 	success "[DONE] Disabling Windows Defender..."
 }
 Function DisableDefenderCloud {
     info "Disabling Windows Defender Cloud..."
+Create-Path-If-Not-Exists "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet"
     If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet")) {
         New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet" -Force | Out-Null
     }
@@ -53,6 +50,7 @@ Function DisableDefenderCloud {
 }
 Function DisableUpdateMSRT {
 	info "Disabling Malicious Software Removal Tool offering..."
+Create-Path-If-Not-Exists "HKLM:\SOFTWARE\Policies\Microsoft\MRT"
 	If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\MRT")) {
 		New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\MRT" | Out-Null
 	}
@@ -65,17 +63,13 @@ Function DisableUpdateDriver {
     If (Test-Path "$path") {
         Set-ItemProperty -Path "$path" -Name "SearchOrderConfig" -Type DWord -Value 0
     }
-	If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate")) {
-		New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" | Out-Null
-	}
+    Create-Path-If-Not-Exists "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate"
 	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" -Name "ExcludeWUDriversInQualityUpdate" -Type DWord -Value 1
 	success "[DONE] Disabling driver offering through Windows Update..."
 }
 Function DisableUpdateRestart {
 	info "Disabling Windows Update automatic restart..."
-	If (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU")) {
-		New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" -Force | Out-Null
-	}
+    Create-Path-If-Not-Exists "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU"
 	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" -Name "NoAutoRebootWithLoggedOnUsers" -Type DWord -Value 1
 	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" -Name "AUPowerManagement" -Type DWord -Value 0
 	success "[DONE] Disabling Windows Update automatic restart..."
@@ -187,9 +181,7 @@ Function DisableHibernation {
     If (Test-Path "$path") {
         Set-ItemProperty -Path "$path" -Name "HibernteEnabled" -Type Dword -Value 0
     }
-	If (!(Test-Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FlyoutMenuSettings")) {
-		New-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FlyoutMenuSettings" | Out-Null
-	}
+Create-Path-If-Not-Exists "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FlyoutMenuSettings"
 	Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FlyoutMenuSettings" -Name "ShowHibernateOption" -Type Dword -Value 0
     Start-Process 'powercfg.exe' -Verb runAs -ArgumentList '/h off'
     success "[DONE] Disabling Hibernation..."
@@ -218,9 +210,7 @@ Function DisableExtraServices {
 }
 Function DisableAutorun {
 	info "Disabling Autorun for all drives..."
-	If (!(Test-Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer")) {
-		New-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" | Out-Null
-	}
+Create-Path-If-Not-Exists "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer"
 	Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" -Name "NoDriveTypeAutoRun" -Type DWord -Value 255
 	success "[DONE] Disabling Autorun for all drives..."
 }
