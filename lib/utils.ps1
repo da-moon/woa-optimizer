@@ -121,7 +121,7 @@ function Safe-Remove-ItemProperty($Path,$Name,$Type,$Value) {
 }
 function Safe-Uninstall($app) {
     try {
-        info "Getting $app information"
+        debug "Getting $app information"
         $package = Get-AppxPackage -all "$app" -ErrorAction Stop | Out-Null
         info "uninstalling $app"
         Remove-AppxPackage -AllUsers -PackageName $package -ErrorAction Stop | Out-Null
