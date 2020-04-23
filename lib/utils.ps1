@@ -121,5 +121,16 @@ function Safe-Set-ItemProperty($Path,$Name,$Type,$Value) {
     catch {
         warn "could not set path $Path with name $Name , type $Type and value $Value"
     }
- 
+}
+function Create-Path-If-Not-Exists($Path) {
+    try {
+        debug "Cheking if path $Path exists"
+        If (!(Test-Path "$Path")) {
+            debug "$Path does not exists. creating ..."
+            New-Item -Path "$Path" -Force -ErrorAction Stop | Out-Null
+        }
+    }
+    catch {
+        warn "could not create path $Path"
+    }
 }

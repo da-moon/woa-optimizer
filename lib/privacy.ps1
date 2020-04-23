@@ -8,9 +8,6 @@ Function DisableTelemetry {
     )
     foreach($path in $paths) {
         Safe-Set-ItemProperty "$path" "AllowTelemetry" DWord 0
-        # If (Test-Path "$path") {
-        #     Set-ItemProperty -Path "$path" -Name "AllowTelemetry" -Type DWord -Value 0
-        # }
     }
     success "[DONE] Disabling Telemetry..."
 }
@@ -24,9 +21,7 @@ Function DisableWiFiSense {
         "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\WiFi\AllowAutoConnectToWiFiSenseHotspots"
     )
     foreach($path in $paths) {
-        If (Test-Path "$path") {
-            Set-ItemProperty -Path "$path" -Name "Value" -Type DWord -Value 0
-        }
+        Safe-Set-ItemProperty  "$path" "Value" DWord 0
     }
 	success "[DONE] Disabling Wi-Fi Sense..."
 
