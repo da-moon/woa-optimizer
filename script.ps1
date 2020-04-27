@@ -1,5 +1,6 @@
 #Requires -Version 5
-# Tweaks
+# it can be 'amd64' also
+$arch="arm64"
 $package_managers = @(
     "InstallScoop",
     "InstallChocolatey"

@@ -90,6 +90,11 @@ Function InstallLinuxSubsystem {
     Safe-Set-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock" "AllowAllTrustedApps" DWord 1
     Enable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Windows-Subsystem-Linux" -NoRestart -WarningAction SilentlyContinue | Out-Null
     $url="https://aka.ms/wsl-ubuntu-1804-arm"
+    If ($arch == "amd64") {
+        $url="https://aka.ms/wsl-ubuntu-1804"
+        info "enbling Virtual Machine Platform component ..."
+        Enable-WindowsOptionalFeature -Online -FeatureName "VirtualMachinePlatform" -NoRestart -WarningAction SilentlyContinue | Out-Null
+	}
     $dir=pwd
     $file="ubuntu.appx"
     aria2_dl "$url" "$dir" "$file"
@@ -178,7 +183,7 @@ Function InstallScoop {
 function InstallScoopPackages{
     info "Installing Requested Software WIth Scoop ..."
     foreach($app in $scoop_software) {
-        scoop install -s -a 32bit $app
+        scoop install -s $app
     }
     success "Installing Requested Software WIth Scoop ..."
 }
